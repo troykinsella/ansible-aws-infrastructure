@@ -1,0 +1,8 @@
+---
+- set_fact:
+    security_group_id: "{{ dict() }}"
+
+- include: create/security-group.yml
+  vars:
+    system_role: "{{ item }}"
+  with_items: "{{ aws_security_group.keys() }}"

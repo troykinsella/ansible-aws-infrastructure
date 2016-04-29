@@ -1,0 +1,14 @@
+---
+dependencies: []
+galaxy_info:
+  author: Troy Kinsella
+  description: AWS infrastructure simplified
+  license: MIT
+  min_ansible_version: 2.0
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  galaxy_tags:
+  - cloud
+  github_branch: master

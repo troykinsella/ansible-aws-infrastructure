@@ -1,0 +1,13 @@
+---
+- name: security group | {{ system_role }}
+  ec2_group:
+    state: present
+    region: "{{ aws_region }}"
+    vpc_id: "{{ vpc.vpc_id }}"
+    name: "{{ aws_project }}-{{ system_role }}"
+    description: "{{ aws_security_group[system_role].description | mandatory }}"
+    rules: "{{ aws_security_group[system_role].rules }}"
+  register: security
+
+- set_fact:
+    security_group_id: "{{ security_group_id.update({ system_role: security.group_id }) }}{{ security_group_id }}"

@@ -1,0 +1,10 @@
+---
+- include: vpc.yml
+  tags:
+  - vpc
+- include: security-groups.yml
+  tags:
+  - security-groups
+- include: instances.yml
+  tags:
+  - instances

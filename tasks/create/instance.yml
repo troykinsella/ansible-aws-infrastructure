@@ -1,0 +1,47 @@
+---
+- name: ec2 | find image | {{ system_role }}
+  ec2_ami_find:
+    name: "{{ aws_ec2_ami_name }}"
+    region: "{{ aws_region }}"
+    owner: "{{ aws_ec2_ami_owner }}"
+    sort: name
+    sort_order: descending
+    sort_end: 1
+  register: ami_find
+
+- name: ec2 | create instance | {{ system_role }}
+  ec2:
+    region: "{{ aws_region }}"
+    zone: "{{ aws_region }}{{ aws_preferred_availability_zone }}"
+
+    key_name: "{{ aws_key_pair_name | default(omit) }}"
+
+    group_id: "{{ security_group_id[system_role] }}"
+
+    image: "{{ ami_find.results[0].ami_id }}"
+    instance_type: "{{ instance_type }}"
+    exact_count: 1
+    count_tag:
+      Project:     "{{ aws_project }}"
+      Environment: "{{ aws_environment_name }}"
+      Role:        "{{ system_role }}"
+      Name:        "{{ system_role }}.{{ aws_project }}-{{ aws_environment_name }}"
+
+    volumes:
+      - device_name: /dev/sda1
+        device_type: gp2
+        delete_on_termination: yes
+        volume_size: "{{ root_volume_size }}"
+
+    wait: yes
+
+    vpc_subnet_id: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | selectattr('az', 'equalto', aws_region + aws_preferred_availability_zone) | join(',', attribute='id') }}"
+    assign_public_ip: "{{ assign_public_ip }}"
+
+    instance_tags:
+      Project:     "{{ aws_project }}"
+      Environment: "{{ aws_environment_name }}"
+      Role:        "{{ system_role }}"
+      Name:        "{{ system_role }}.{{ aws_project }}-{{ aws_environment_name }}"
+
+  register: instance

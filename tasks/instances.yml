@@ -2,8 +2,10 @@
 - include: create/instance.yml
   vars:
     system_role: "{{ item.system_role }}"
+    ami_id: "{{ item.ami_id | default(aws_ami_id) }}"
     instance_type: "{{ item.instance_type | mandatory }}"
     key_pair_name: "{{ item.key_pair_name | default(aws_key_pair_name) }}"
     assign_public_ip: "{{ item.assign_public_ip | default('no') }}"
     root_volume_size: "{{ item.root_volume_size | default(aws_root_volume_size) }}"
+    host_group: "{{ item.host_group | default(aws_ec2_host_group) }}"
   with_items: "{{ aws_ec2_instances }}"

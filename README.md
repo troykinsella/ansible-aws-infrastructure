@@ -23,7 +23,7 @@ Including an example of how to use your role (for instance, with variables passe
         aws_key_pair_name: admin
         aws_environment_name: dev
         aws_subnets:
-          - cidr: "{{ subnet_prefix }}.0.0/27"
+          - cidr: "{{ aws_subnet_prefix }}.0.0/27"
             az: "{{ aws_region }}a"
             resource_tags:
               'Project': "{{ aws_project }}"

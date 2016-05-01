@@ -6,7 +6,7 @@
     vpc_id: "{{ vpc.vpc_id }}"
     name: "{{ aws_project }}-{{ system_role }}"
     description: "{{ aws_security_group[system_role].description | mandatory }}"
-    rules: "{{ aws_security_group[system_role].rules }}"
+    rules: "{{ aws_security_group[system_role].rules | mandatory }}"
   register: security
 
 - set_fact:

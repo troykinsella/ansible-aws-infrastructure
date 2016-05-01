@@ -25,8 +25,8 @@ aws_subnet_prefix: "10.0"
 #    - { proto: tcp, from_port: 80,    to_port: 80,    cidr_ip: 0.0.0.0/0 }
 #    - { proto: tcp, from_port: 443,   to_port: 443,   cidr_ip: 0.0.0.0/0 }
 
+aws_ec2_host_group: ec2hosts
 
-aws_ec2_ami_name: ubuntu/images/ebs/ubuntu-trusty-14.04-amd64-server-*
-aws_ec2_ami_owner: 099720109477
+aws_ami_id: ami-9abea4fb
 
 aws_root_volume_size: 10

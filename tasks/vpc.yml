@@ -26,6 +26,3 @@
   register: vpc
   tags:
   - vpc
-
-- debug:
-    var: vpc
